@@ -70,6 +70,20 @@ func NewPasswordOnlyConfig(password string, jwtConfig identity.JWTServiceConfig,
 }
 
 /*
+NewUserNamePasswordConfig creates a configuration for validating user name and
+password login handlers.
+*/
+func NewUserNamePasswordConfig(jwtConfig identity.JWTServiceConfig, logger *logrus.Entry) LoginHandlerConfig {
+	return LoginHandlerConfig{
+		AccessControlAllowOrigin:  "*",
+		AccessControlAllowMethods: "POST, OPTIONS",
+		AccessControlAllowHeaders: "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization",
+		JWTService:                identity.NewJWTService(jwtConfig),
+		Logger:                    logger,
+	}
+}
+
+/*
 LoginHandlerPassword is a handler for a login that only expects a
 password. This password is verified against a password provided in
 the LoginHandlerConfig.

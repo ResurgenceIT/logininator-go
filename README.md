@@ -67,3 +67,32 @@ validateCreds := func(loginRequest logininator.UserNamePasswordRequest) (bool, m
 router.Handle("/api/login", logininator.LoginHandlerUserNamePassword(config, validateCreds)).Methods(http.MethodPost, http.MethodOptions)
 ```
 
+### User Name, Password, and Code
+
+Here is an example where you want to validate a user name, password, and some type of code (or other identifying piece of information)  against some service or database. 
+
+```go
+logger := logrus.New().WithField("who", "my app")
+jwtConfig := identity.JWTServiceConfig{
+  AuthSalt:         JWTSalt,
+  AuthSecret:       JWTSecret,
+  Issuer:           JWTIssuer,
+  TimeoutInMinutes: JWTTimeout,
+}
+
+config := logininator.NewUserNamePasswordCodeConfig(jwtConfig, logger)
+
+validateCreds := func(loginRequest logininator.UserNamePasswordCodeRequest) (bool, map[string]interface{}, error) {
+  // Here is where you would validate the user name and password provided in
+  // in loginReequest. If there is some type of error, be sure to return that.
+  // Otherwise, return true in the first result if the credentials pass, or false
+  // if they don't. 
+  //
+  // The second result is any additional information you want to include in the
+  // resulting JWT token, like a user ID or permission information.
+}
+
+// ...HTTP server and mux code goes here. I recommend Gorilla Mux!
+router.Handle("/api/login", logininator.LoginHandlerUserNamePasswordCode(config, validateCreds)).Methods(http.MethodPost, http.MethodOptions)
+```
+

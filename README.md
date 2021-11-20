@@ -96,3 +96,22 @@ validateCreds := func(loginRequest logininator.UserNamePasswordCodeRequest) (boo
 router.Handle("/api/login", logininator.LoginHandlerUserNamePasswordCode(config, validateCreds)).Methods(http.MethodPost, http.MethodOptions)
 ```
 
+## Middlewares
+
+### JWT Middleware
+
+When using one of the above JWT-based validators a JWT token is returned. Most often this will be used by front-end clients in each request so your server can validate requests and have additional context when needed. Logininator provides middlewares to make this validation easier. There are two methods provided. **JWTMiddlewareHandler** is for wrapping an individual handler in a JWT middleware (like a GraphQL handler, for example). **JWTMiddleware** is for use with Gorilla Mux to attach to a router (or sub-router).
+
+This example assumes you've setup one of the password validators above, and clients are passing a JWT in the **Authorization** header in the format of ```Bearer <token>```. Here you'll see how to use this middleware to add the JWT token to the HTTP request context.
+
+```go
+logger := logrus.New().WithField("who", "my app")
+jwtConfig := identity.JWTServiceConfig{
+  AuthSalt:         JWTSalt,
+  AuthSecret:       JWTSecret,
+  Issuer:           JWTIssuer,
+  TimeoutInMinutes: JWTTimeout,
+}
+
+router.Use(logininator.JWTMiddleware(logger, jwtConfig))
+```

@@ -1,6 +1,7 @@
 package logininator
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/app-nerds/kit/v6/identity"
@@ -67,7 +68,7 @@ func LoginHandlerUserNamePasswordCode(config LoginHandlerConfig, credentialValid
 
 		// Validate
 		ok, additionalData, err = credentialValidationFunc(loginRequest)
-
+		fmt.Printf("additionalData: %+v\n", additionalData)
 		if err != nil {
 			config.Logger.WithError(err).Error("error validating login credentials")
 

@@ -59,11 +59,9 @@ func JWTMiddleware(logger *logrus.Entry, jwtConfig identity.JWTServiceConfig) mu
 			 * Validate and parse the token
 			 */
 			if jwt, err = jwtService.ParseToken(key); err != nil {
-				logger.WithError(err).WithFields(logrus.Fields{
-					"key": key,
-				}).Error("error parsing jwt token")
+				logger.WithError(err).Error("error parsing jwt token")
 
-				nerdweb.WriteJSON(logger, w, http.StatusInternalServerError, GenericError{
+				nerdweb.WriteJSON(logger, w, http.StatusUnauthorized, GenericError{
 					Message: "error parsing authorization",
 				})
 
@@ -122,11 +120,9 @@ func JWTMiddlewareHandler(logger *logrus.Entry, jwtConfig identity.JWTServiceCon
 		 * Validate and parse the token
 		 */
 		if jwt, err = jwtService.ParseToken(key); err != nil {
-			logger.WithError(err).WithFields(logrus.Fields{
-				"key": key,
-			}).Error("error parsing jwt token")
+			logger.WithError(err).Error("error parsing jwt token")
 
-			nerdweb.WriteJSON(logger, w, http.StatusInternalServerError, GenericError{
+			nerdweb.WriteJSON(logger, w, http.StatusUnauthorized, GenericError{
 				Message: "error parsing authorization",
 			})
 

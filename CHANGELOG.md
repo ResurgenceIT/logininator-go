@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.1
+
+* Sending back correct HTTP status (401) when JWT token doesn't parse
+
 ## v1.1.0
 
 * Added new login method: User name + Password + Code. This provides a way to handle things like multi-tenant systems.

@@ -1,4 +1,4 @@
-module github.com/app-nerds/logininator-go
+module github.com/ResurgenceIT/logininator-go
 
 go 1.16
 

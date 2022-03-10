@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/app-nerds/kit/v6/identity"
-	"github.com/app-nerds/nerdweb/v2"
+	"github.com/ResurgenceIT/kit/v6/identity"
+	"github.com/ResurgenceIT/nerdweb/v2"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"

@@ -9,7 +9,7 @@ Logininator is a set of tools for creating web application logins. I got tired o
 To begin add this to your Go modules. The below commands will retrieve this library, and its dependencies, and add it to your go.mod file.
 
 ```bash
-go get github.com/app-nerds/logininator-go
+go get github.com/ResurgenceIT/logininator-go
 go get
 ```
 
